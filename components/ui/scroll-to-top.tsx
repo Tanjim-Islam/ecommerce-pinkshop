@@ -1,36 +1,36 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { ArrowUp } from "lucide-react"
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ArrowUp } from "lucide-react";
 
 export function ScrollToTop() {
-  const [showScrollTop, setShowScrollTop] = useState(false)
+  const [showScrollTop, setShowScrollTop] = useState(false);
 
   // Show/hide scroll to top button
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 500) {
-        setShowScrollTop(true)
+        setShowScrollTop(true);
       } else {
-        setShowScrollTop(false)
+        setShowScrollTop(false);
       }
-    }
+    };
 
-    window.addEventListener("scroll", handleScroll)
+    window.addEventListener("scroll", handleScroll);
 
     return () => {
-      window.removeEventListener("scroll", handleScroll)
-    }
-  }, [])
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   // Scroll to top
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
       behavior: "smooth",
-    })
-  }
+    });
+  };
 
   return (
     <AnimatePresence>
@@ -48,6 +48,5 @@ export function ScrollToTop() {
         </motion.button>
       )}
     </AnimatePresence>
-  )
+  );
 }
-

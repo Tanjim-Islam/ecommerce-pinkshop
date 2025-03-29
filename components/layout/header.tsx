@@ -1,49 +1,64 @@
-"use client"
+"use client";
 
-import { useState, useRef, useEffect } from "react"
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { ShoppingCart, Heart, Search, Menu, User, X } from "lucide-react"
-import { motion, useScroll, useTransform, useSpring, useMotionTemplate } from "framer-motion"
+import { useState, useRef, useEffect } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { ShoppingCart, Heart, Search, Menu, User, X } from "lucide-react";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useSpring,
+  useMotionTemplate,
+} from "framer-motion";
 
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
+import { navigationItems } from "@/data";
 
 interface HeaderProps {
-  wishlist: number[]
-  cart: number[]
-  setIsMenuOpen: (isOpen: boolean) => void
-  setIsCartOpen: (isOpen: boolean) => void
+  wishlist: number[];
+  cart: number[];
+  setIsMenuOpen: (isOpen: boolean) => void;
+  setIsCartOpen: (isOpen: boolean) => void;
 }
 
-export function Header({ wishlist, cart, setIsMenuOpen, setIsCartOpen }: HeaderProps) {
-  const [isSearchOpen, setIsSearchOpen] = useState(false)
-  const searchRef = useRef<HTMLDivElement>(null)
-  const pathname = usePathname() // Moved usePathname hook here
+export function Header({
+  wishlist,
+  cart,
+  setIsMenuOpen,
+  setIsCartOpen,
+}: HeaderProps) {
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const searchRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
 
   // Scroll animations
-  const { scrollY } = useScroll()
-  const scrollYSpring = useSpring(scrollY)
+  const { scrollY } = useScroll();
+  const scrollYSpring = useSpring(scrollY);
 
-  const headerOpacity = useTransform(scrollYSpring, [0, 50], [1, 0.98])
-  const headerBlur = useTransform(scrollYSpring, [0, 50], [0, 8])
-  const headerBackground = useMotionTemplate`rgba(255, 255, 255, ${headerOpacity})`
-  const headerBackdropBlur = useMotionTemplate`blur(${headerBlur}px)`
+  const headerOpacity = useTransform(scrollYSpring, [0, 50], [1, 0.98]);
+  const headerBlur = useTransform(scrollYSpring, [0, 50], [0, 8]);
+  const headerBackground = useMotionTemplate`rgba(255, 255, 255, ${headerOpacity})`;
+  const headerBackdropBlur = useMotionTemplate`blur(${headerBlur}px)`;
 
   // Close search when clicking outside
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
-        setIsSearchOpen(false)
+      if (
+        searchRef.current &&
+        !searchRef.current.contains(event.target as Node)
+      ) {
+        setIsSearchOpen(false);
       }
     }
 
-    document.addEventListener("mousedown", handleClickOutside)
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside)
-    }
-  }, [])
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <motion.header
@@ -77,21 +92,23 @@ export function Header({ wishlist, cart, setIsMenuOpen, setIsCartOpen }: HeaderP
             </motion.div>
           </Link>
           <nav className="hidden lg:flex items-center space-x-6 mx-6">
-            {[
-              { name: "Home", href: "/" },
-              { name: "Shop", href: "/shop" },
-              { name: "Categories", href: "/categories" },
-              { name: "New Arrivals", href: "/new-arrivals" },
-              { name: "Sale", href: "/sale" },
-            ].map((item) => {
-              const isActive = pathname === item.href || (item.href !== "/" && pathname?.startsWith(item.href))
+            {navigationItems.map((item) => {
+              const isActive =
+                pathname === item.href ||
+                (item.href !== "/" && pathname?.startsWith(item.href));
 
               return (
-                <motion.div key={item.name} whileHover={{ y: -2 }} transition={{ type: "spring", stiffness: 400 }}>
+                <motion.div
+                  key={item.name}
+                  whileHover={{ y: -2 }}
+                  transition={{ type: "spring", stiffness: 400 }}
+                >
                   <Link
                     href={item.href}
                     className={`text-sm font-medium transition-colors relative ${
-                      isActive ? "text-pink-400" : "hover:text-pink-400 text-gray-700"
+                      isActive
+                        ? "text-pink-400"
+                        : "hover:text-pink-400 text-gray-700"
                     }`}
                   >
                     {item.name}
@@ -106,7 +123,7 @@ export function Header({ wishlist, cart, setIsMenuOpen, setIsCartOpen }: HeaderP
                     )}
                   </Link>
                 </motion.div>
-              )
+              );
             })}
           </nav>
 
@@ -162,12 +179,20 @@ export function Header({ wishlist, cart, setIsMenuOpen, setIsCartOpen }: HeaderP
               </Button>
             </motion.div>
             <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
-              <Button variant="ghost" size="icon" className="text-gray-700 hover:text-pink-400 rounded-full">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="text-gray-700 hover:text-pink-400 rounded-full"
+              >
                 <User className="h-5 w-5" />
               </Button>
             </motion.div>
             <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
-              <Button variant="ghost" size="icon" className="text-gray-700 hover:text-pink-400 rounded-full relative">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="text-gray-700 hover:text-pink-400 rounded-full relative"
+              >
                 <Heart className="h-5 w-5" />
                 {wishlist.length > 0 && (
                   <motion.div
@@ -207,6 +232,5 @@ export function Header({ wishlist, cart, setIsMenuOpen, setIsCartOpen }: HeaderP
         </div>
       </div>
     </motion.header>
-  )
+  );
 }
-

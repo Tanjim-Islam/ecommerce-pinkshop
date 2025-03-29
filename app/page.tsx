@@ -1,63 +1,65 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { AnimatePresence } from "framer-motion"
+import { useState } from "react";
+import { AnimatePresence } from "framer-motion";
 
-import { Header } from "@/components/layout/header"
-import { Footer } from "@/components/layout/footer"
-import { MobileMenu } from "@/components/navigation/mobile-menu"
-import { CartSidebar } from "@/components/cart/cart-sidebar"
-import { QuickView } from "@/components/products/quick-view"
-import { ScrollToTop } from "@/components/ui/scroll-to-top"
-import { HeroSection } from "@/components/sections/hero-section"
-import { BenefitsSection } from "@/components/sections/benefits-section"
-import { CategoriesSection } from "@/components/sections/categories-section"
-import { ProductsSection } from "@/components/sections/products-section"
-import { NewsletterSection } from "@/components/sections/newsletter-section"
+import { Header } from "@/components/layout/header";
+import { Footer } from "@/components/layout/footer";
+import { MobileMenu } from "@/components/navigation/mobile-menu";
+import { CartSidebar } from "@/components/cart/cart-sidebar";
+import { QuickView } from "@/components/products/quick-view";
+import { ScrollToTop } from "@/components/ui/scroll-to-top";
+import { HeroSection } from "@/components/sections/hero-section";
+import { BenefitsSection } from "@/components/sections/benefits-section";
+import { CategoriesSection } from "@/components/sections/categories-section";
+import { ProductsSection } from "@/components/sections/products-section";
+import { NewsletterSection } from "@/components/sections/newsletter-section";
 
-import type { Product } from "@/types"
-import { featuredProducts, newArrivals } from "@/data"
+import type { Product } from "@/types";
+import { featuredProducts, newArrivals } from "@/data";
 
 export default function HomePage() {
   // State
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [wishlist, setWishlist] = useState<number[]>([])
-  const [cart, setCart] = useState<number[]>([])
-  const [isCartOpen, setIsCartOpen] = useState(false)
-  const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null)
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [wishlist, setWishlist] = useState<number[]>([]);
+  const [cart, setCart] = useState<number[]>([]);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(
+    null
+  );
 
   // Toggle wishlist
   const toggleWishlist = (id: number) => {
     if (wishlist.includes(id)) {
-      setWishlist(wishlist.filter((item) => item !== id))
+      setWishlist(wishlist.filter((item) => item !== id));
     } else {
-      setWishlist([...wishlist, id])
+      setWishlist([...wishlist, id]);
     }
-  }
+  };
 
   // Toggle cart
   const toggleCart = (id: number) => {
     if (cart.includes(id)) {
-      setCart(cart.filter((item) => item !== id))
+      setCart(cart.filter((item) => item !== id));
     } else {
-      setCart([...cart, id])
+      setCart([...cart, id]);
     }
-  }
+  };
 
   // Open quick view
   const openQuickView = (product: Product) => {
-    setQuickViewProduct(product)
-    document.body.style.overflow = "hidden"
-  }
+    setQuickViewProduct(product);
+    document.body.style.overflow = "hidden";
+  };
 
   // Close quick view
   const closeQuickView = () => {
-    setQuickViewProduct(null)
-    document.body.style.overflow = "auto"
-  }
+    setQuickViewProduct(null);
+    document.body.style.overflow = "auto";
+  };
 
   // All products for cart
-  const allProducts = [...featuredProducts, ...newArrivals]
+  const allProducts = [...featuredProducts, ...newArrivals];
 
   return (
     <div className="min-h-screen flex flex-col relative">
@@ -79,7 +81,12 @@ export default function HomePage() {
       </AnimatePresence>
 
       {/* Mobile Menu */}
-      <MobileMenu isOpen={isMenuOpen} wishlist={wishlist} cart={cart} onClose={() => setIsMenuOpen(false)} />
+      <MobileMenu
+        isOpen={isMenuOpen}
+        wishlist={wishlist}
+        cart={cart}
+        onClose={() => setIsMenuOpen(false)}
+      />
 
       {/* Cart Sidebar */}
       <CartSidebar
@@ -91,7 +98,12 @@ export default function HomePage() {
       />
 
       {/* Header */}
-      <Header wishlist={wishlist} cart={cart} setIsMenuOpen={setIsMenuOpen} setIsCartOpen={setIsCartOpen} />
+      <Header
+        wishlist={wishlist}
+        cart={cart}
+        setIsMenuOpen={setIsMenuOpen}
+        setIsCartOpen={setIsCartOpen}
+      />
 
       <main className="flex-1">
         {/* Hero Section */}
@@ -133,6 +145,5 @@ export default function HomePage() {
       {/* Footer */}
       <Footer />
     </div>
-  )
+  );
 }
-

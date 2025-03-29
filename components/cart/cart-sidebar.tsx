@@ -1,22 +1,28 @@
-"use client"
+"use client";
 
-import { motion, AnimatePresence } from "framer-motion"
-import Image from "next/image"
-import { ShoppingCart, X } from "lucide-react"
+import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
+import { ShoppingCart, X } from "lucide-react";
 
-import { Button } from "@/components/ui/button"
-import type { Product } from "@/types"
+import { Button } from "@/components/ui/button";
+import type { Product } from "@/types";
 
 interface CartSidebarProps {
-  isOpen: boolean
-  cart: number[]
-  products: Product[]
-  toggleCart: (id: number) => void
-  onClose: () => void
+  isOpen: boolean;
+  cart: number[];
+  products: Product[];
+  toggleCart: (id: number) => void;
+  onClose: () => void;
 }
 
-export function CartSidebar({ isOpen, cart, products, toggleCart, onClose }: CartSidebarProps) {
-  const cartProducts = products.filter((product) => cart.includes(product.id))
+export function CartSidebar({
+  isOpen,
+  cart,
+  products,
+  toggleCart,
+  onClose,
+}: CartSidebarProps) {
+  const cartProducts = products.filter((product) => cart.includes(product.id));
 
   const staggerContainer = {
     hidden: { opacity: 0 },
@@ -26,12 +32,12 @@ export function CartSidebar({ isOpen, cart, products, toggleCart, onClose }: Car
         staggerChildren: 0.1,
       },
     },
-  }
+  };
 
   const slideUp = {
     hidden: { y: 50, opacity: 0 },
     visible: { y: 0, opacity: 1, transition: { duration: 0.5 } },
-  }
+  };
 
   return (
     <AnimatePresence>
@@ -45,7 +51,9 @@ export function CartSidebar({ isOpen, cart, products, toggleCart, onClose }: Car
         >
           <div className="flex flex-col h-full">
             <div className="p-4 border-b flex items-center justify-between">
-              <h2 className="text-lg font-semibold">Shopping Cart ({cart.length})</h2>
+              <h2 className="text-lg font-semibold">
+                Shopping Cart ({cart.length})
+              </h2>
               <Button
                 variant="ghost"
                 size="icon"
@@ -89,15 +97,28 @@ export function CartSidebar({ isOpen, cart, products, toggleCart, onClose }: Car
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    <Button className="bg-pink-400 hover:bg-pink-500 text-white rounded-full" onClick={onClose}>
+                    <Button
+                      className="bg-pink-400 hover:bg-pink-500 text-white rounded-full"
+                      onClick={onClose}
+                    >
                       Continue Shopping
                     </Button>
                   </motion.div>
                 </div>
               ) : (
-                <motion.ul variants={staggerContainer} initial="hidden" animate="visible" className="space-y-4">
+                <motion.ul
+                  variants={staggerContainer}
+                  initial="hidden"
+                  animate="visible"
+                  className="space-y-4"
+                >
                   {cartProducts.map((product) => (
-                    <motion.li key={product.id} variants={slideUp} className="flex gap-4 border-b pb-4" layout>
+                    <motion.li
+                      key={product.id}
+                      variants={slideUp}
+                      className="flex gap-4 border-b pb-4"
+                      layout
+                    >
                       <div className="relative h-20 w-20 rounded-2xl overflow-hidden bg-gray-100 flex-shrink-0">
                         <Image
                           src={product.image || "/placeholder.svg"}
@@ -107,9 +128,13 @@ export function CartSidebar({ isOpen, cart, products, toggleCart, onClose }: Car
                         />
                       </div>
                       <div className="flex-1">
-                        <h4 className="font-medium text-gray-900">{product.name}</h4>
+                        <h4 className="font-medium text-gray-900">
+                          {product.name}
+                        </h4>
                         <div className="flex items-center justify-between mt-1">
-                          <div className="text-gray-800 font-semibold">${product.price.toFixed(2)}</div>
+                          <div className="text-gray-800 font-semibold">
+                            ${product.price.toFixed(2)}
+                          </div>
                           <Button
                             size="sm"
                             variant="ghost"
@@ -137,11 +162,19 @@ export function CartSidebar({ isOpen, cart, products, toggleCart, onClose }: Car
                     animate={{ scale: 1, color: "#111827" }}
                     transition={{ duration: 0.3 }}
                   >
-                    ${cartProducts.reduce((total, product) => total + product.price, 0).toFixed(2)}
+                    $
+                    {cartProducts
+                      .reduce((total, product) => total + product.price, 0)
+                      .toFixed(2)}
                   </motion.span>
                 </div>
-                <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
-                  <Button className="w-full bg-pink-400 hover:bg-pink-500 text-white rounded-full">Checkout</Button>
+                <motion.div
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
+                >
+                  <Button className="w-full bg-pink-400 hover:bg-pink-500 text-white rounded-full">
+                    Checkout
+                  </Button>
                 </motion.div>
               </div>
             )}
@@ -149,6 +182,5 @@ export function CartSidebar({ isOpen, cart, products, toggleCart, onClose }: Car
         </motion.div>
       )}
     </AnimatePresence>
-  )
+  );
 }
-
