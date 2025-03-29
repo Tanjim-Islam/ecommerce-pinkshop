@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { AnimatePresence } from "framer-motion"
+import { useCart } from "@/components/providers/cart-provider"
 
 import { SaleHeader } from "@/components/sale/sale-header"
 import { SaleBanner } from "@/components/sale/sale-banner"
@@ -22,7 +23,7 @@ export default function SalePage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isCartOpen, setIsCartOpen] = useState(false)
   const [wishlist, setWishlist] = useState<number[]>([])
-  const [cart, setCart] = useState<number[]>([])
+  const { cart, toggleCart } = useCart()
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null)
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false)
   const [activeSort, setActiveSort] = useState("discount-high-low")
@@ -45,14 +46,7 @@ export default function SalePage() {
     }
   }
 
-  // Toggle cart
-  const toggleCart = (id: number) => {
-    if (cart.includes(id)) {
-      setCart(cart.filter((item) => item !== id))
-    } else {
-      setCart([...cart, id])
-    }
-  }
+
 
   // Open quick view
   const openQuickView = (product: Product) => {

@@ -14,6 +14,7 @@ import { BenefitsSection } from "@/components/sections/benefits-section";
 import { CategoriesSection } from "@/components/sections/categories-section";
 import { ProductsSection } from "@/components/sections/products-section";
 import { NewsletterSection } from "@/components/sections/newsletter-section";
+import { useCart } from "@/components/providers/cart-provider";
 
 import type { Product } from "@/types";
 import { featuredProducts, newArrivals } from "@/data";
@@ -22,7 +23,7 @@ export default function HomePage() {
   // State
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [wishlist, setWishlist] = useState<number[]>([]);
-  const [cart, setCart] = useState<number[]>([]);
+  const { cart, toggleCart } = useCart();
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(
     null
@@ -37,14 +38,7 @@ export default function HomePage() {
     }
   };
 
-  // Toggle cart
-  const toggleCart = (id: number) => {
-    if (cart.includes(id)) {
-      setCart(cart.filter((item) => item !== id));
-    } else {
-      setCart([...cart, id]);
-    }
-  };
+
 
   // Open quick view
   const openQuickView = (product: Product) => {

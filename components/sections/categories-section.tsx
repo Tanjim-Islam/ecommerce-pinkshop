@@ -77,7 +77,7 @@ export function CategoriesSection() {
                 transition: { duration: 0.2 },
               }}
             >
-              <Link href="#" className="group relative h-40 md:h-64 rounded-2xl overflow-hidden block">
+              <Link href={`/categories/${category.name.toLowerCase()}`} className="group relative h-40 md:h-64 rounded-2xl overflow-hidden block">
                 <Image
                   src={category.image || "/placeholder.svg"}
                   alt={category.name}

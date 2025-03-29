@@ -1,32 +1,35 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { AnimatePresence } from "framer-motion"
+import { useState } from "react";
+import { AnimatePresence } from "framer-motion";
+import { useCart } from "@/components/providers/cart-provider";
 
-import { ShopHeader } from "@/components/shop/shop-header"
-import { ProductGrid } from "@/components/shop/product-grid"
-import { FilterSidebar } from "@/components/shop/filter-sidebar"
-import { MobileSortFilter } from "@/components/shop/mobile-sort-filter"
-import { QuickView } from "@/components/products/quick-view"
-import { Pagination } from "@/components/shop/pagination"
-import { ScrollToTop } from "@/components/ui/scroll-to-top"
-import { MobileMenu } from "@/components/navigation/mobile-menu"
-import { CartSidebar } from "@/components/cart/cart-sidebar"
+import { ShopHeader } from "@/components/shop/shop-header";
+import { ProductGrid } from "@/components/shop/product-grid";
+import { FilterSidebar } from "@/components/shop/filter-sidebar";
+import { MobileSortFilter } from "@/components/shop/mobile-sort-filter";
+import { QuickView } from "@/components/products/quick-view";
+import { Pagination } from "@/components/shop/pagination";
+import { ScrollToTop } from "@/components/ui/scroll-to-top";
+import { MobileMenu } from "@/components/navigation/mobile-menu";
+import { CartSidebar } from "@/components/cart/cart-sidebar";
 
-import type { Product } from "@/types"
-import { allProducts } from "@/data"
+import type { Product } from "@/types";
+import { allProducts } from "@/data";
 
 export default function ShopPage() {
   // State
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [isCartOpen, setIsCartOpen] = useState(false)
-  const [wishlist, setWishlist] = useState<number[]>([])
-  const [cart, setCart] = useState<number[]>([])
-  const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null)
-  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false)
-  const [activeView, setActiveView] = useState<"grid" | "list">("grid")
-  const [activeSort, setActiveSort] = useState("featured")
-  const [currentPage, setCurrentPage] = useState(1)
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [wishlist, setWishlist] = useState<number[]>([]);
+  const { cart, toggleCart } = useCart();
+  const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(
+    null
+  );
+  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
+  const [activeView, setActiveView] = useState<"grid" | "list">("grid");
+  const [activeSort, setActiveSort] = useState("featured");
+  const [currentPage, setCurrentPage] = useState(1);
   const [filters, setFilters] = useState({
     categories: [] as string[],
     priceRange: [0, 500] as [number, number],
@@ -34,91 +37,97 @@ export default function ShopPage() {
     sizes: [] as string[],
     onSale: false,
     inStock: false,
-  })
+  });
 
   // Toggle wishlist
   const toggleWishlist = (id: number) => {
     if (wishlist.includes(id)) {
-      setWishlist(wishlist.filter((item) => item !== id))
+      setWishlist(wishlist.filter((item) => item !== id));
     } else {
-      setWishlist([...wishlist, id])
+      setWishlist([...wishlist, id]);
     }
-  }
-
-  // Toggle cart
-  const toggleCart = (id: number) => {
-    if (cart.includes(id)) {
-      setCart(cart.filter((item) => item !== id))
-    } else {
-      setCart([...cart, id])
-    }
-  }
+  };
 
   // Open quick view
   const openQuickView = (product: Product) => {
-    setQuickViewProduct(product)
-    document.body.style.overflow = "hidden"
-  }
+    setQuickViewProduct(product);
+    document.body.style.overflow = "hidden";
+  };
 
   // Close quick view
   const closeQuickView = () => {
-    setQuickViewProduct(null)
-    document.body.style.overflow = "auto"
-  }
+    setQuickViewProduct(null);
+    document.body.style.overflow = "auto";
+  };
 
   // Apply filters
   const filteredProducts = allProducts.filter((product) => {
     // Filter by price range
-    if (product.price < filters.priceRange[0] || product.price > filters.priceRange[1]) {
-      return false
+    if (
+      product.price < filters.priceRange[0] ||
+      product.price > filters.priceRange[1]
+    ) {
+      return false;
     }
 
     // Filter by categories
-    if (filters.categories.length > 0 && !filters.categories.includes(product.category || "")) {
-      return false
+    if (
+      filters.categories.length > 0 &&
+      !filters.categories.includes(product.category || "")
+    ) {
+      return false;
     }
 
     // Filter by colors
-    if (filters.colors.length > 0 && !filters.colors.includes(product.color || "")) {
-      return false
+    if (
+      filters.colors.length > 0 &&
+      !filters.colors.includes(product.color || "")
+    ) {
+      return false;
     }
 
     // Filter by sizes
-    if (filters.sizes.length > 0 && !filters.sizes.includes(product.size || "")) {
-      return false
+    if (
+      filters.sizes.length > 0 &&
+      !filters.sizes.includes(product.size || "")
+    ) {
+      return false;
     }
 
     // Filter by sale
     if (filters.onSale && !product.discount) {
-      return false
+      return false;
     }
 
     // Filter by stock
     if (filters.inStock && !product.inStock) {
-      return false
+      return false;
     }
 
-    return true
-  })
+    return true;
+  });
 
   // Sort products
   const sortedProducts = [...filteredProducts].sort((a, b) => {
     switch (activeSort) {
       case "price-low-high":
-        return a.price - b.price
+        return a.price - b.price;
       case "price-high-low":
-        return b.price - a.price
+        return b.price - a.price;
       case "newest":
-        return (b.id || 0) - (a.id || 0)
+        return (b.id || 0) - (a.id || 0);
       default:
-        return 0
+        return 0;
     }
-  })
+  });
 
   // Pagination
-  const productsPerPage = 12
-  const totalPages = Math.ceil(sortedProducts.length / productsPerPage)
-  const paginatedProducts = sortedProducts.slice((currentPage - 1) * productsPerPage, currentPage * productsPerPage)
+  const productsPerPage = 12;
+  const totalPages = Math.ceil(sortedProducts.length / productsPerPage);
+  const paginatedProducts = sortedProducts.slice(
+    (currentPage - 1) * productsPerPage,
+    currentPage * productsPerPage
+  );
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -126,7 +135,12 @@ export default function ShopPage() {
       <ScrollToTop />
 
       {/* Mobile Menu */}
-      <MobileMenu isOpen={isMenuOpen} wishlist={wishlist} cart={cart} onClose={() => setIsMenuOpen(false)} />
+      <MobileMenu
+        isOpen={isMenuOpen}
+        wishlist={wishlist}
+        cart={cart}
+        onClose={() => setIsMenuOpen(false)}
+      />
 
       {/* Cart Sidebar */}
       <CartSidebar
@@ -193,13 +207,16 @@ export default function ShopPage() {
             {/* Pagination */}
             {totalPages > 1 && (
               <div className="mt-8">
-                <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
+                <Pagination
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  onPageChange={setCurrentPage}
+                />
               </div>
             )}
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }
-

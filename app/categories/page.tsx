@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { AnimatePresence } from "framer-motion"
+import { useCart } from "@/components/providers/cart-provider"
 
 import { CategoryHeader } from "@/components/categories/category-header"
 import { CategoryGrid } from "@/components/categories/category-grid"
@@ -19,7 +20,7 @@ export default function CategoriesPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isCartOpen, setIsCartOpen] = useState(false)
   const [wishlist, setWishlist] = useState<number[]>([])
-  const [cart, setCart] = useState<number[]>([])
+  const { cart, toggleCart } = useCart()
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null)
   const [activeCategory, setActiveCategory] = useState<string | null>(null)
 
@@ -32,14 +33,7 @@ export default function CategoriesPage() {
     }
   }
 
-  // Toggle cart
-  const toggleCart = (id: number) => {
-    if (cart.includes(id)) {
-      setCart(cart.filter((item) => item !== id))
-    } else {
-      setCart([...cart, id])
-    }
-  }
+
 
   // Open quick view
   const openQuickView = (product: Product) => {
