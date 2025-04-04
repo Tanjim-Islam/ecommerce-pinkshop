@@ -51,8 +51,8 @@ export function Header({
   const { scrollY } = useScroll();
   const scrollYSpring = useSpring(scrollY);
 
-  const headerOpacity = useTransform(scrollYSpring, [0, 50], [1, 0.98]);
-  const headerBlur = useTransform(scrollYSpring, [0, 50], [0, 8]);
+  const headerOpacity = 0.1;
+  const headerBlur = 3;
   const headerBackground = useMotionTemplate`rgba(255, 255, 255, ${headerOpacity})`;
   const headerBackdropBlur = useMotionTemplate`blur(${headerBlur}px)`;
 
@@ -154,13 +154,14 @@ export function Header({
 
   return (
     <motion.header
-      className="sticky top-0 z-10 border-b"
+      // Ensure the header has a lower z-index than the cart sidebar
+      className="sticky top-0 z-[50] border-b"
       style={{
         backgroundColor: headerBackground,
         backdropFilter: headerBackdropBlur,
       }}
     >
-      <div className="container mx-auto px-4 py-2">
+      <div className="container mx-auto px-4 py-2 border-b border-white/10">
         <div className="flex items-center justify-between py-2">
           <div className="flex items-center gap-2 lg:hidden">
             <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>

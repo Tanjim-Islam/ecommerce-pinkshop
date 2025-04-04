@@ -29,10 +29,12 @@ export function HeroSection() {
   const heroOpacity = useTransform(heroScrollProgress, [0, 0.8], [1, 0]);
 
   return (
+    // Change the section positioning to make it start from the top of the page
+    // and extend the video background to be visible through the navbar
     <section
-      className="relative overflow-hidden"
+      className="relative overflow-hidden min-h-screen"
       ref={heroRef}
-      style={{ height: "100vh", maxHeight: "800px", minHeight: "600px" }}
+      style={{ marginTop: "-72px", paddingTop: "72px" }} // Adjust for navbar height
     >
       {/* Video Background */}
       <div className="absolute inset-0 w-full h-full z-0">
