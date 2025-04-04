@@ -190,24 +190,26 @@ export function Header({
               </Link>
             </motion.div>
             <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="text-gray-700 hover:text-pink-400 rounded-full relative"
-              >
-                <Heart className="h-5 w-5" />
-                {wishlist.length > 0 && (
-                  <motion.div
-                    initial={{ scale: 0, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    exit={{ scale: 0, opacity: 0 }}
-                  >
-                    <Badge className="absolute -top-1 -right-1 bg-pink-400 text-white text-xs h-5 w-5 flex items-center justify-center rounded-full">
-                      {wishlist.length}
-                    </Badge>
-                  </motion.div>
-                )}
-              </Button>
+              <Link href="/wishlist">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="text-gray-700 hover:text-pink-400 rounded-full relative"
+                >
+                  <Heart className="h-5 w-5" />
+                  {wishlist.length > 0 && (
+                    <motion.div
+                      initial={{ scale: 0, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      exit={{ scale: 0, opacity: 0 }}
+                    >
+                      <Badge className="absolute -top-1 -right-1 bg-pink-400 text-white text-xs h-5 w-5 flex items-center justify-center rounded-full">
+                        {wishlist.length}
+                      </Badge>
+                    </motion.div>
+                  )}
+                </Button>
+              </Link>
             </motion.div>
             <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
               <Button
