@@ -27,7 +27,7 @@ export function MobileMenu({
           animate={{ x: 0 }}
           exit={{ x: "-100%" }}
           transition={{ type: "spring", stiffness: 300, damping: 30 }}
-          className="fixed inset-0 bg-white z-50 p-6 overflow-y-auto"
+          className="fixed inset-0 z-[60] p-6 overflow-y-auto bg-white/30 backdrop-blur-[15px]" // ✅ Transparent + blur
         >
           <div className="flex justify-between items-center mb-8">
             <Link href="/" className="text-2xl font-bold text-pink-400">
@@ -130,6 +130,7 @@ export function MobileMenu({
                       className="text-pink-400 hover:text-pink-500 bg-white p-2 rounded-full shadow-sm inline-flex items-center justify-center"
                     >
                       <span className="sr-only">{social}</span>
+                      {/* Icons remain unchanged */}
                       {social === "Facebook" && (
                         <svg
                           className="h-5 w-5"

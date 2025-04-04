@@ -57,7 +57,12 @@ export function SaleHeader({ productCount, activeSort, setActiveSort, openMobile
             transition={{ duration: 0.5, delay: 0.3 }}
           >
             <div className="flex items-center gap-2">
-              <Button variant="ghost" size="sm" className="md:hidden" onClick={openMobileFilter}>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="md:hidden"
+                onClick={openMobileFilter}
+              >
                 <SlidersHorizontal className="h-4 w-4 mr-2" />
                 Filter & Sort
               </Button>
@@ -66,13 +71,19 @@ export function SaleHeader({ productCount, activeSort, setActiveSort, openMobile
             <div className="flex items-center gap-2 w-full justify-center">
               <span className="text-sm text-gray-500">Sort by:</span>
               <Select value={activeSort} onValueChange={setActiveSort}>
-                <SelectTrigger className="w-[180px]">
+                <SelectTrigger className="w-[220px]">
                   <SelectValue placeholder="Discount: High to Low" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="discount-high-low">Discount: High to Low</SelectItem>
-                  <SelectItem value="price-low-high">Price: Low to High</SelectItem>
-                  <SelectItem value="price-high-low">Price: High to Low</SelectItem>
+                  <SelectItem value="discount-high-low">
+                    Discount: High to Low
+                  </SelectItem>
+                  <SelectItem value="price-low-high">
+                    Price: Low to High
+                  </SelectItem>
+                  <SelectItem value="price-high-low">
+                    Price: High to Low
+                  </SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -89,6 +100,6 @@ export function SaleHeader({ productCount, activeSort, setActiveSort, openMobile
         </div>
       </div>
     </section>
-  )
+  );
 }
 

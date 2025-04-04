@@ -51,10 +51,44 @@ export function Header({
   const { scrollY } = useScroll();
   const scrollYSpring = useSpring(scrollY);
 
-  const headerOpacity = 0.1;
-  const headerBlur = 3;
+  const headerOpacity = 0.2; 
+  const headerBlur = 5;
   const headerBackground = useMotionTemplate`rgba(255, 255, 255, ${headerOpacity})`;
   const headerBackdropBlur = useMotionTemplate`blur(${headerBlur}px)`;
+
+  // Add isFloating state to track navbar state
+  const [isFloating, setIsFloating] = useState(false);
+  const [scrollDirection, setScrollDirection] = useState<"up" | "down">("up");
+  const [prevScrollY, setPrevScrollY] = useState(0);
+
+  // Enhanced scroll detection
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      // Determine scroll direction
+      if (currentScrollY > prevScrollY) {
+        setScrollDirection("down");
+      } else {
+        setScrollDirection("up");
+      }
+
+      if (currentScrollY > 100) {
+        setIsFloating(true);
+      } else if (
+        currentScrollY < 50 ||
+        (scrollDirection === "up" && currentScrollY < 100)
+      ) {
+        // If we're scrolling up and getting close to the top, preemptively remove floating state
+        setIsFloating(false);
+      }
+
+      setPrevScrollY(currentScrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [prevScrollY, scrollDirection]);
 
   // Generate search suggestions based on input
   useEffect(() => {
@@ -154,11 +188,24 @@ export function Header({
 
   return (
     <motion.header
-      // Ensure the header has a lower z-index than the cart sidebar
-      className="sticky top-0 z-[50] border-b"
+      className={`sticky z-[50] ${isFloating ? "shadow-2xl" : "border-b"}`}
       style={{
+        top: isFloating ? "1.5rem" : "0",
         backgroundColor: headerBackground,
         backdropFilter: headerBackdropBlur,
+        borderRadius: isFloating ? "9999px" : "0",
+        margin: isFloating
+          ? typeof window !== "undefined" && window.innerWidth < 768
+            ? "0 auto"
+            : "0 3rem"
+          : "0",
+        width: isFloating
+          ? typeof window !== "undefined" && window.innerWidth < 768
+            ? "auto"
+            : "calc(100% - 6rem)"
+          : "100%",
+        transition:
+          "top 0.3s ease, border-radius 0.3s ease, margin 0.3s ease, width 0.3s ease, background-color 0.3s ease, backdrop-filter 0.3s ease",
       }}
     >
       <div className="container mx-auto px-4 py-2 border-b border-white/10">
