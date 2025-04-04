@@ -1,16 +1,19 @@
-"use client"
+"use client";
 
-import { useRef } from "react"
-import { motion } from "framer-motion"
+import { useRef } from "react";
+import { motion } from "framer-motion";
 
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 export function NewsletterSection() {
-  const newsletterRef = useRef<HTMLDivElement>(null)
+  const newsletterRef = useRef<HTMLDivElement>(null);
 
   return (
-    <section className="py-12 bg-pink-200 text-pink-800 overflow-hidden relative" ref={newsletterRef}>
+    <section
+      className="py-12 bg-pink-200 text-pink-800 overflow-hidden relative"
+      ref={newsletterRef}
+    >
       <motion.div
         className="absolute inset-0 opacity-10"
         animate={{
@@ -48,8 +51,15 @@ export function NewsletterSection() {
               ease: "easeInOut",
             }}
           >
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M21 7L9 19L3.5 13.5L4.91 12.09L9 16.17L19.59 5.59L21 7Z" fill="currentColor" />
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M21 7L9 19L3.5 13.5L4.91 12.09L9 16.17L19.59 5.59L21 7Z"
+                fill="currentColor"
+              />
             </svg>
           </motion.div>
 
@@ -65,7 +75,11 @@ export function NewsletterSection() {
               ease: "easeInOut",
             }}
           >
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
               <path
                 d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z"
                 fill="currentColor"
@@ -89,8 +103,8 @@ export function NewsletterSection() {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.5, delay: 0.3 }}
           >
-            Subscribe to our newsletter and get 10% off your first purchase plus updates on new arrivals and exclusive
-            offers.
+            Subscribe to our newsletter and get 10% off your first purchase plus
+            updates on new arrivals and exclusive offers.
           </motion.p>
           <motion.div
             className="flex flex-col sm:flex-row gap-2 max-w-md mx-auto"
@@ -99,18 +113,32 @@ export function NewsletterSection() {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.5, delay: 0.4 }}
           >
-            <Input
-              type="email"
-              placeholder="Your email address"
-              className="bg-white/80 border-pink-300 text-gray-700 placeholder:text-pink-300 rounded-full"
-            />
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Button className="bg-pink-400 hover:bg-pink-500 text-white rounded-full px-8">Subscribe</Button>
-            </motion.div>
+            <form
+              onSubmit={(e) => e.preventDefault()}
+              className="flex flex-col sm:flex-row gap-2 w-full"
+              key="newsletter-form"
+            >
+              <Input
+                type="email"
+                placeholder="Your email address"
+                className="bg-white/80 border-pink-300 text-gray-700 placeholder:text-pink-300 rounded-full"
+                autoComplete="off"
+              />
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Button
+                  type="submit"
+                  className="bg-pink-400 hover:bg-pink-500 text-white rounded-full px-8"
+                >
+                  Subscribe
+                </Button>
+              </motion.div>
+            </form>
           </motion.div>
         </motion.div>
       </div>
     </section>
-  )
+  );
 }
-
