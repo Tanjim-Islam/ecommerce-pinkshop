@@ -23,7 +23,7 @@ export default function HomePage() {
   // State
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [wishlist, setWishlist] = useState<number[]>([]);
-  const { cart, toggleCart } = useCart();
+  const { cart, toggleCart, clearCart } = useCart();
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(
     null
@@ -88,6 +88,7 @@ export default function HomePage() {
         cart={cart}
         products={allProducts}
         toggleCart={toggleCart}
+        clearCart={clearCart}
         onClose={() => setIsCartOpen(false)}
       />
 

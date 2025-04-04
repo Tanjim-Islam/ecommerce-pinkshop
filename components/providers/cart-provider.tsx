@@ -5,6 +5,7 @@ import { createContext, useContext, useState, ReactNode } from "react"
 interface CartContextType {
   cart: number[]
   toggleCart: (id: number) => void
+  clearCart: () => void
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined)
@@ -20,8 +21,12 @@ export function CartProvider({ children }: { children: ReactNode }) {
     }
   }
 
+  const clearCart = () => {
+    setCart([])
+  }
+
   return (
-    <CartContext.Provider value={{ cart, toggleCart }}>
+    <CartContext.Provider value={{ cart, toggleCart, clearCart }}>
       {children}
     </CartContext.Provider>
   )
