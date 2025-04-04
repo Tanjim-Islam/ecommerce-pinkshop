@@ -4,6 +4,8 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { CartProvider } from "@/components/providers/cart-provider";
+import { PageTransition } from "@/components/ui/page-transition";
+import { NavigationEvents } from "@/components/navigation/navigation-events";
 
 const poppins = Poppins({
   weight: ["300", "400", "500", "600", "700"],
@@ -14,7 +16,6 @@ export const metadata: Metadata = {
   title: "PinkShop - Fashion & Accessories",
   description:
     "Discover the latest trends in fashion and accessories at PinkShop",
-  generator: "v0.dev",
 };
 
 export default function RootLayout({
@@ -31,9 +32,9 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <CartProvider>
-            {children}
-          </CartProvider>
+          <PageTransition />
+          <NavigationEvents />
+          <CartProvider>{children}</CartProvider>
         </ThemeProvider>
       </body>
     </html>
