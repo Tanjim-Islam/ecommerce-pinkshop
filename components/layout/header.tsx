@@ -179,13 +179,15 @@ export function Header({
               </Button>
             </motion.div>
             <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="text-gray-700 hover:text-pink-400 rounded-full"
-              >
-                <User className="h-5 w-5" />
-              </Button>
+              <Link href="/profile">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="text-gray-700 hover:text-pink-400 rounded-full"
+                >
+                  <User className="h-5 w-5" />
+                </Button>
+              </Link>
             </motion.div>
             <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
               <Button

@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { ShoppingCart, X } from "lucide-react";
+import { ShoppingCart, X, Trash } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import type { Product } from "@/types";
@@ -12,6 +12,7 @@ interface CartSidebarProps {
   cart: number[];
   products: Product[];
   toggleCart: (id: number) => void;
+  clearCart: () => void;
   onClose: () => void;
 }
 
@@ -20,6 +21,7 @@ export function CartSidebar({
   cart,
   products,
   toggleCart,
+  clearCart,
   onClose,
 }: CartSidebarProps) {
   const cartProducts = products.filter((product) => cart.includes(product.id));
@@ -106,48 +108,66 @@ export function CartSidebar({
                   </motion.div>
                 </div>
               ) : (
-                <motion.ul
-                  variants={staggerContainer}
-                  initial="hidden"
-                  animate="visible"
-                  className="space-y-4"
-                >
-                  {cartProducts.map((product) => (
-                    <motion.li
-                      key={product.id}
-                      variants={slideUp}
-                      className="flex gap-4 border-b pb-4"
-                      layout
+                <>
+                  <div className="flex justify-end mb-4">
+                    <motion.div
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
                     >
-                      <div className="relative h-20 w-20 rounded-2xl overflow-hidden bg-gray-100 flex-shrink-0">
-                        <Image
-                          src={product.image || "/placeholder.svg"}
-                          alt={product.name}
-                          fill
-                          className="object-cover"
-                        />
-                      </div>
-                      <div className="flex-1">
-                        <h4 className="font-medium text-gray-900">
-                          {product.name}
-                        </h4>
-                        <div className="flex items-center justify-between mt-1">
-                          <div className="text-gray-800 font-semibold">
-                            ${product.price.toFixed(2)}
-                          </div>
-                          <Button
-                            size="sm"
-                            variant="ghost"
-                            className="text-gray-400 hover:text-pink-400 p-0 h-auto"
-                            onClick={() => toggleCart(product.id)}
-                          >
-                            <X className="h-4 w-4" />
-                          </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="text-red-500 border-red-200 hover:bg-red-50 hover:text-red-600 rounded-full"
+                        onClick={clearCart}
+                      >
+                        <Trash className="h-4 w-4 mr-2" />
+                        Remove All
+                      </Button>
+                    </motion.div>
+                  </div>
+                  <motion.ul
+                    variants={staggerContainer}
+                    initial="hidden"
+                    animate="visible"
+                    className="space-y-4"
+                  >
+                    {cartProducts.map((product) => (
+                      <motion.li
+                        key={product.id}
+                        variants={slideUp}
+                        className="flex gap-4 border-b pb-4"
+                        layout
+                      >
+                        <div className="relative h-20 w-20 rounded-2xl overflow-hidden bg-gray-100 flex-shrink-0">
+                          <Image
+                            src={product.image || "/placeholder.svg"}
+                            alt={product.name}
+                            fill
+                            className="object-cover"
+                          />
                         </div>
-                      </div>
-                    </motion.li>
-                  ))}
-                </motion.ul>
+                        <div className="flex-1">
+                          <h4 className="font-medium text-gray-900">
+                            {product.name}
+                          </h4>
+                          <div className="flex items-center justify-between mt-1">
+                            <div className="text-gray-800 font-semibold">
+                              ${product.price.toFixed(2)}
+                            </div>
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              className="text-gray-400 hover:text-pink-400 p-0 h-auto"
+                              onClick={() => toggleCart(product.id)}
+                            >
+                              <X className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        </div>
+                      </motion.li>
+                    ))}
+                  </motion.ul>
+                </>
               )}
             </div>
 
