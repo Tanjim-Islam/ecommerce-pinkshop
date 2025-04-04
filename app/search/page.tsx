@@ -15,7 +15,7 @@ import { MobileSortFilter } from "@/components/shop/mobile-sort-filter"
 import { QuickView } from "@/components/products/quick-view"
 import { ScrollToTop } from "@/components/ui/scroll-to-top"
 import { MobileMenu } from "@/components/navigation/mobile-menu"
-import { CartSidebar } from "@/components/cart/cart-sidebar"
+
 import { searchProducts } from "@/lib/search"
 import { useCart } from "@/components/providers/cart-provider"
 
@@ -151,15 +151,7 @@ export default function SearchPage() {
       {/* Mobile Menu */}
       <MobileMenu isOpen={isMenuOpen} wishlist={wishlist} cart={cart} onClose={() => setIsMenuOpen(false)} />
 
-      {/* Cart Sidebar */}
-      <CartSidebar
-        isOpen={isCartOpen}
-        cart={cart}
-        products={allProducts}
-        toggleCart={toggleCart}
-        clearCart={clearCart}
-        onClose={() => setIsCartOpen(false)}
-      />
+
 
       {/* Quick View Modal */}
       <AnimatePresence>

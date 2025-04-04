@@ -12,7 +12,6 @@ import { PaymentMethods } from "@/components/profile/payment-methods";
 import { ProfileWishlist } from "@/components/profile/profile-wishlist";
 import { Notifications } from "@/components/profile/notifications";
 import { MobileMenu } from "@/components/navigation/mobile-menu";
-import { CartSidebar } from "@/components/cart/cart-sidebar";
 import { ScrollToTop } from "@/components/ui/scroll-to-top";
 import { useCart } from "@/components/providers/cart-provider";
 import { allProducts } from "@/data";
@@ -41,8 +40,6 @@ export default function ProfilePage() {
       setWishlist([...wishlist, id]);
     }
   };
-
-
 
   // Get wishlist products
   const wishlistProducts = allProducts.filter((product) =>
@@ -88,16 +85,6 @@ export default function ProfilePage() {
         wishlist={wishlist}
         cart={cart}
         onClose={() => setIsMenuOpen(false)}
-      />
-
-      {/* Cart Sidebar */}
-      <CartSidebar
-        isOpen={isCartOpen}
-        cart={cart}
-        products={allProducts}
-        toggleCart={toggleCart}
-        clearCart={clearCart}
-        onClose={() => setIsCartOpen(false)}
       />
 
       <main className="py-12">

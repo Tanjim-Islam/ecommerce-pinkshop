@@ -142,15 +142,6 @@ export default function ShopPage() {
         onClose={() => setIsMenuOpen(false)}
       />
 
-      {/* Cart Sidebar */}
-      <CartSidebar
-        isOpen={isCartOpen}
-        cart={cart}
-        products={allProducts}
-        toggleCart={toggleCart}
-        onClose={() => setIsCartOpen(false)}
-      />
-
       {/* Quick View Modal */}
       <AnimatePresence>
         {quickViewProduct && (

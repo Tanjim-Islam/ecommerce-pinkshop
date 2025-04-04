@@ -3,10 +3,9 @@
 import { useState } from "react";
 import { AnimatePresence } from "framer-motion";
 
-import { Header } from "@/components/layout/header";
+import { HeaderWrapper } from "@/components/layout/header-wrapper";
 import { Footer } from "@/components/layout/footer";
 import { MobileMenu } from "@/components/navigation/mobile-menu";
-import { CartSidebar } from "@/components/cart/cart-sidebar";
 import { QuickView } from "@/components/products/quick-view";
 import { ScrollToTop } from "@/components/ui/scroll-to-top";
 import { HeroSection } from "@/components/sections/hero-section";
@@ -37,8 +36,6 @@ export default function HomePage() {
       setWishlist([...wishlist, id]);
     }
   };
-
-
 
   // Open quick view
   const openQuickView = (product: Product) => {
@@ -82,23 +79,8 @@ export default function HomePage() {
         onClose={() => setIsMenuOpen(false)}
       />
 
-      {/* Cart Sidebar */}
-      <CartSidebar
-        isOpen={isCartOpen}
-        cart={cart}
-        products={allProducts}
-        toggleCart={toggleCart}
-        clearCart={clearCart}
-        onClose={() => setIsCartOpen(false)}
-      />
-
       {/* Header */}
-      <Header
-        wishlist={wishlist}
-        cart={cart}
-        setIsMenuOpen={setIsMenuOpen}
-        setIsCartOpen={setIsCartOpen}
-      />
+      <HeaderWrapper />
 
       <main className="flex-1">
         {/* Hero Section */}

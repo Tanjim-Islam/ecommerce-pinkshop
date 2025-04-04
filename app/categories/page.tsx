@@ -8,7 +8,6 @@ import { CategoryHeader } from "@/components/categories/category-header"
 import { CategoryGrid } from "@/components/categories/category-grid"
 import { FeaturedCategorySection } from "@/components/categories/featured-category-section"
 import { MobileMenu } from "@/components/navigation/mobile-menu"
-import { CartSidebar } from "@/components/cart/cart-sidebar"
 import { QuickView } from "@/components/products/quick-view"
 import { ScrollToTop } from "@/components/ui/scroll-to-top"
 
@@ -60,14 +59,6 @@ export default function CategoriesPage() {
       {/* Mobile Menu */}
       <MobileMenu isOpen={isMenuOpen} wishlist={wishlist} cart={cart} onClose={() => setIsMenuOpen(false)} />
 
-      {/* Cart Sidebar */}
-      <CartSidebar
-        isOpen={isCartOpen}
-        cart={cart}
-        products={allProducts}
-        toggleCart={toggleCart}
-        onClose={() => setIsCartOpen(false)}
-      />
 
       {/* Quick View Modal */}
       <AnimatePresence>
