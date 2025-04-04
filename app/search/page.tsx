@@ -17,6 +17,7 @@ import { ScrollToTop } from "@/components/ui/scroll-to-top"
 import { MobileMenu } from "@/components/navigation/mobile-menu"
 import { CartSidebar } from "@/components/cart/cart-sidebar"
 import { searchProducts } from "@/lib/search"
+import { useCart } from "@/components/providers/cart-provider"
 
 import type { Product } from "@/types"
 import { allProducts } from "@/data"
@@ -29,7 +30,7 @@ export default function SearchPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isCartOpen, setIsCartOpen] = useState(false)
   const [wishlist, setWishlist] = useState<number[]>([])
-  const [cart, setCart] = useState<number[]>([])
+  const { cart, toggleCart, clearCart } = useCart()
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null)
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false)
   const [activeView, setActiveView] = useState<"grid" | "list">("grid")
@@ -64,14 +65,7 @@ export default function SearchPage() {
     }
   }
 
-  // Toggle cart
-  const toggleCart = (id: number) => {
-    if (cart.includes(id)) {
-      setCart(cart.filter((item) => item !== id))
-    } else {
-      setCart([...cart, id])
-    }
-  }
+
 
   // Open quick view
   const openQuickView = (product: Product) => {
@@ -163,7 +157,7 @@ export default function SearchPage() {
         cart={cart}
         products={allProducts}
         toggleCart={toggleCart}
-        clearCart={() => setCart([])}
+        clearCart={clearCart}
         onClose={() => setIsCartOpen(false)}
       />
 

@@ -14,6 +14,7 @@ import { Notifications } from "@/components/profile/notifications";
 import { MobileMenu } from "@/components/navigation/mobile-menu";
 import { CartSidebar } from "@/components/cart/cart-sidebar";
 import { ScrollToTop } from "@/components/ui/scroll-to-top";
+import { useCart } from "@/components/providers/cart-provider";
 import { allProducts } from "@/data";
 
 // Sample user data
@@ -29,7 +30,7 @@ export default function ProfilePage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [wishlist, setWishlist] = useState<number[]>([1, 3, 5]);
-  const [cart, setCart] = useState<number[]>([2, 4]);
+  const { cart, toggleCart, clearCart } = useCart();
   const [activeSection, setActiveSection] = useState("account");
 
   // Toggle wishlist
@@ -41,19 +42,7 @@ export default function ProfilePage() {
     }
   };
 
-  // Toggle cart
-  const toggleCart = (id: number) => {
-    if (cart.includes(id)) {
-      setCart(cart.filter((item) => item !== id));
-    } else {
-      setCart([...cart, id]);
-    }
-  };
 
-  // Clear cart
-  const clearCart = () => {
-    setCart([]);
-  };
 
   // Get wishlist products
   const wishlistProducts = allProducts.filter((product) =>
