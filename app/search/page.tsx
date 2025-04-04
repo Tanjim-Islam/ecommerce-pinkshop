@@ -317,11 +317,13 @@ export default function SearchPage() {
                   </div>
 
                   <div className="flex items-center gap-2">
-                    <span className="text-sm text-gray-500">Sort by:</span>
+                    <label htmlFor="sort-select" className="text-sm text-gray-500">Sort by:</label>
                     <select
+                      id="sort-select"
                       value={activeSort}
                       onChange={(e) => setActiveSort(e.target.value)}
                       className="text-sm border-gray-200 rounded-md"
+                      aria-label="Sort products by"
                     >
                       <option value="relevance">Relevance</option>
                       <option value="newest">Newest</option>
