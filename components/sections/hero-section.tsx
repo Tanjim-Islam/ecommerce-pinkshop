@@ -47,10 +47,7 @@ export function HeroSection() {
           className="absolute inset-0 w-full h-full object-cover"
           style={{ width: "100%", height: "100%" }}
         >
-          <source
-            src="hero-video.mp4"
-            type="video/mp4"
-          />
+          <source src="hero-video.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
         {/* Semi-transparent overlay to ensure text readability */}
@@ -58,7 +55,7 @@ export function HeroSection() {
       </div>
 
       <div className="container mx-auto px-4 py-12 md:py-24 relative z-10 h-full flex items-center">
-        <div className="grid md:grid-cols-2 gap-8 items-center w-full">
+        <div className="grid md:grid-cols-2 gap-8 items-center w-full md:mt-20">
           <motion.div
             className="space-y-6"
             initial={{ opacity: 0, x: -50 }}
