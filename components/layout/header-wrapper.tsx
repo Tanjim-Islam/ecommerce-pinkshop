@@ -12,8 +12,20 @@ export function HeaderWrapper() {
   const [wishlist] = useState<number[]>([]);
   const { cart, toggleCart, clearCart } = useCart();
 
-  const handleCartToggle = () => {
-    setIsCartOpen(!isCartOpen);
+  const handleMenuOpen = () => {
+    setIsMenuOpen(true);
+  };
+
+  const handleMenuClose = () => {
+    setIsMenuOpen(false);
+  };
+
+  const handleCartOpen = () => {
+    setIsCartOpen(true);
+  };
+
+  const handleCartClose = () => {
+    setIsCartOpen(false);
   };
 
   return (
@@ -21,8 +33,10 @@ export function HeaderWrapper() {
       <Header
         wishlist={wishlist}
         cart={cart}
-        setIsMenuOpen={setIsMenuOpen}
-        setIsCartOpen={handleCartToggle}
+        onMenuOpen={handleMenuOpen}
+        onMenuClose={handleMenuClose}
+        onCartOpen={handleCartOpen}
+        onCartClose={handleCartClose}
       />
       <CartSidebar
         isOpen={isCartOpen}

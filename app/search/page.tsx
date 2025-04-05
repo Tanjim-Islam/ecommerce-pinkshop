@@ -213,7 +213,7 @@ export default function SearchPage() {
                 )}
                 <Button
                   type="submit"
-                  className="absolute right-1 top-1/2 transform -translate-y-1/2 bg-pink-400 hover:bg-pink-500 text-white rounded-full"
+                  className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-pink-400 hover:bg-pink-500 text-white rounded-full"
                 >
                   Search
                 </Button>

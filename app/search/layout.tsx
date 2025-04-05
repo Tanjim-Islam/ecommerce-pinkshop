@@ -1,6 +1,6 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Header } from "@/components/layout/header"
+import { HeaderWrapper } from "@/components/layout/header-wrapper"
 import { Footer } from "@/components/layout/footer"
 
 export const metadata: Metadata = {
@@ -15,7 +15,7 @@ export default function SearchLayout({
 }>) {
   return (
     <>
-      <Header wishlist={[]} cart={[]} setIsMenuOpen={() => {}} setIsCartOpen={() => {}} />
+      <HeaderWrapper />
       {children}
       <Footer />
     </>

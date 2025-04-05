@@ -26,17 +26,28 @@ import { allProducts } from "@/data";
 interface HeaderProps {
   wishlist: number[];
   cart: number[];
-  setIsMenuOpen: (isOpen: boolean) => void;
-  setIsCartOpen: (isOpen: boolean) => void;
+  onMenuOpen: () => void;
+  onMenuClose: () => void;
+  onCartOpen: () => void;
+  onCartClose: () => void;
 }
 
 // Update the Header component to include search suggestions
 export function Header({
   wishlist,
   cart,
-  setIsMenuOpen,
-  setIsCartOpen,
+  onMenuOpen,
+  onMenuClose,
+  onCartOpen,
+  onCartClose,
 }: HeaderProps) {
+  const handleMenuClick = () => {
+    onMenuOpen();
+  };
+
+  const handleCartClick = () => {
+    onCartOpen();
+  };
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -216,7 +227,7 @@ export function Header({
                 variant="ghost"
                 size="icon"
                 className="text-pink-400 rounded-full hover:bg-pink-50"
-                onClick={() => setIsMenuOpen(true)}
+                onClick={handleMenuClick}
               >
                 <Menu className="h-6 w-6" />
               </Button>
@@ -541,7 +552,7 @@ export function Header({
                     ? "text-pink-400 bg-pink-50"
                     : "text-gray-700 hover:text-pink-400"
                 }`}
-                onClick={() => setIsCartOpen(true)}
+                onClick={handleCartClick}
               >
                 <ShoppingCart className="h-5 w-5" />
                 {cart.length > 0 && (
