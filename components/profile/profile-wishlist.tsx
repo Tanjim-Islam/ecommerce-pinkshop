@@ -6,6 +6,7 @@ import { ShoppingCart } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { ProductCard } from "@/components/products/product-card"
 import type { Product } from "@/types"
+import { Heart } from "lucide-react";
 
 interface ProfileWishlistProps {
   products: Product[]
@@ -73,7 +74,3 @@ export function ProfileWishlist({ products, wishlist, cart, toggleWishlist, togg
     </motion.div>
   )
 }
-
-// Import Heart icon for the empty state
-import { Heart } from "lucide-react"
-

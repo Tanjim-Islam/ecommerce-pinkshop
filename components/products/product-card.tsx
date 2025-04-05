@@ -2,6 +2,7 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Heart, ShoppingCart, Star, Eye } from "lucide-react";
+import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -30,65 +31,89 @@ export function ProductCard({
       whileHover={{ y: -5 }}
       transition={{ duration: 0.2 }}
     >
-      <div className="relative aspect-square rounded-2xl overflow-hidden bg-gray-100 mb-3">
-        <Image
-          src={product.image || "/placeholder.svg"}
-          alt={product.name}
-          fill
-          className="object-cover transition-transform duration-500 group-hover:scale-110"
-        />
-        <div className="absolute top-2 right-2 z-10 flex flex-col gap-2">
-          <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
-            <Button
-              size="icon"
-              variant="secondary"
-              className={`rounded-full bg-white shadow-sm ${
-                wishlist.includes(product.id)
-                  ? "text-pink-400"
-                  : "text-gray-400"
-              }`}
-              onClick={() => toggleWishlist(product.id)}
-            >
-              <Heart
-                className={`h-4 w-4 ${
-                  wishlist.includes(product.id) ? "fill-pink-400" : ""
+      <div className="group relative">
+        <div className="relative aspect-square overflow-hidden rounded-2xl bg-gray-100 transition-all duration-300 group-hover:shadow-lg">
+          <Link href={`/product/${product.id}`}>
+            <Image
+              src={product.image || "/placeholder.svg"}
+              alt={product.name}
+              fill
+              className="object-cover transition-transform duration-500 group-hover:scale-110"
+            />
+            {product.isNew && (
+              <Badge className="absolute top-2 left-2 bg-pink-400 text-white rounded-full px-3">
+                New
+              </Badge>
+            )}
+            {product.discount && (
+              <Badge className="absolute top-2 left-2 bg-pink-400 text-white rounded-full px-3">
+                -{product.discount}%
+              </Badge>
+            )}
+          </Link>
+
+          {/* Action Buttons moved outside Link */}
+          <div className="absolute top-2 right-2 z-10 flex flex-col gap-2">
+            <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+              <Button
+                size="icon"
+                variant="secondary"
+                className={`rounded-full bg-white shadow-sm ${
+                  wishlist.includes(product.id)
+                    ? "text-pink-400"
+                    : "text-gray-400"
                 }`}
-              />
-            </Button>
-          </motion.div>
-          <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
-            <Button
-              size="icon"
-              variant="secondary"
-              className="rounded-full bg-white shadow-sm text-gray-400"
-              onClick={() => openQuickView(product)}
-            >
-              <Eye className="h-4 w-4" />
-            </Button>
-          </motion.div>
+                onClick={() => toggleWishlist(product.id)}
+              >
+                <Heart
+                  className={`h-4 w-4 ${
+                    wishlist.includes(product.id) ? "fill-pink-400" : ""
+                  }`}
+                />
+              </Button>
+            </motion.div>
+            <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+              <Button
+                size="icon"
+                variant="secondary"
+                className="rounded-full bg-white shadow-sm text-gray-400"
+                onClick={() => openQuickView(product)}
+              >
+                <Eye className="h-4 w-4" />
+              </Button>
+            </motion.div>
+          </div>
+
+          {/* Add to Cart Button outside Link */}
+          <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Button
+                className="w-full bg-white text-pink-400 hover:bg-pink-50 rounded-full"
+                onClick={() => toggleCart(product.id)}
+              >
+                {cart.includes(product.id)
+                  ? "Remove from Cart"
+                  : "Add to Cart"}
+              </Button>
+            </motion.div>
+          </div>
         </div>
-        {product.isNew && (
-          <Badge className="absolute top-2 left-2 bg-pink-400 text-white rounded-full px-3">
-            New
-          </Badge>
-        )}
-        {product.discount && (
-          <Badge className="absolute top-2 left-2 bg-pink-400 text-white rounded-full px-3">
-            -{product.discount}%
-          </Badge>
-        )}
-        <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-            <Button
-              className="w-full bg-white text-pink-400 hover:bg-pink-50 rounded-full"
-              onClick={() => toggleCart(product.id)}
-            >
-              {cart.includes(product.id) ? "Remove from Cart" : "Add to Cart"}
-            </Button>
-          </motion.div>
+
+        <div className="mt-4 flex justify-between">
+          <div>
+            <Link href={`/product/${product.id}`}>
+              <h3 className="text-sm font-medium text-gray-900 group-hover:text-pink-400 transition-colors duration-200">
+                {product.name}
+              </h3>
+            </Link>
+            <p className="mt-1 text-sm text-gray-500">{product.category}</p>
+          </div>
+          <p className="text-sm font-medium text-gray-900">
+            ${product.price.toFixed(2)}
+          </p>
         </div>
       </div>
-      <h3 className="font-medium text-gray-900">{product.name}</h3>
+
       <div className="flex items-center justify-between mt-1">
         <div className="flex items-center gap-2">
           <span className="text-gray-800 font-semibold">
