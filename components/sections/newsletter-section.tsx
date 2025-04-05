@@ -97,7 +97,7 @@ export function NewsletterSection() {
             Join Our Newsletter
           </motion.h2>
           <motion.p
-            className="text-pink-300"
+            className="text-pink-400"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
