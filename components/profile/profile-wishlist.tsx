@@ -2,9 +2,11 @@
 
 import { motion } from "framer-motion"
 import { ShoppingCart } from "lucide-react"
+import { useState } from "react"
 
 import { Button } from "@/components/ui/button"
 import { ProductCard } from "@/components/products/product-card"
+import { QuickView } from "@/components/products/quick-view"
 import type { Product } from "@/types"
 import { Heart } from "lucide-react";
 
@@ -17,8 +19,11 @@ interface ProfileWishlistProps {
 }
 
 export function ProfileWishlist({ products, wishlist, cart, toggleWishlist, toggleCart }: ProfileWishlistProps) {
-  // Dummy function for openQuickView since we're not using it here
-  const openQuickView = (product: Product) => {}
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
+
+  const openQuickView = (product: Product) => {
+    setSelectedProduct(product)
+  }
 
   return (
     <motion.div
@@ -44,6 +49,17 @@ export function ProfileWishlist({ products, wishlist, cart, toggleWishlist, togg
           </motion.div>
         )}
       </div>
+
+      {selectedProduct && (
+        <QuickView
+          product={selectedProduct}
+          closeQuickView={() => setSelectedProduct(null)}
+          wishlist={wishlist}
+          cart={cart}
+          toggleWishlist={toggleWishlist}
+          toggleCart={toggleCart}
+        />
+      )}
 
       {products.length === 0 ? (
         <div className="text-center py-12">
