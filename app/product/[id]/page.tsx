@@ -12,6 +12,7 @@ import { CartSidebar } from "@/components/cart/cart-sidebar";
 import { allProducts } from "@/data";
 import type { Product } from "@/types";
 import { Footer } from "@/components/layout/footer";
+import { HeaderWrapper } from "@/components/layout/header-wrapper";
 
 export default function ProductPage() {
   // Get product ID from URL
@@ -121,6 +122,7 @@ export default function ProductPage() {
 
   return (
     <>
+      <HeaderWrapper />
       {/* Cart Sidebar */}
       <CartSidebar
         isOpen={isCartOpen}
