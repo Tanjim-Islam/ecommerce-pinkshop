@@ -41,16 +41,18 @@ export function ProductDetail({
 
       <div className="space-y-6">
         <div>
-          {product.isNew && (
-            <Badge className="bg-pink-400 text-white rounded-full px-3 mb-2">
-              New
-            </Badge>
-          )}
-          {product.discount && (
-            <Badge className="bg-pink-400 text-white rounded-full px-3 mb-2">
-              -{product.discount}%
-            </Badge>
-          )}
+          <div className="flex flex-wrap gap-2 mb-2">
+            {product.isNew && (
+              <Badge className="bg-pink-400 text-white rounded-full px-3">
+                New
+              </Badge>
+            )}
+            {product.discount && (
+              <Badge className="bg-pink-400 text-white rounded-full px-3">
+                -{product.discount}%
+              </Badge>
+            )}
+          </div>
 
           <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
             {product.name}
