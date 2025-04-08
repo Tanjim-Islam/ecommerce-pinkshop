@@ -1,4 +1,4 @@
-# PinkShop - Elevating Women's Fashion Online
+# PinkShop
 
 ![PinkShop Screenshot](./public/ss.jpg)
 
