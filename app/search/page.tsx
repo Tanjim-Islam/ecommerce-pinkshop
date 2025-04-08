@@ -2,7 +2,7 @@
 
 import type React from "react";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { SearchIcon, Filter, X } from "lucide-react";
@@ -21,9 +21,15 @@ import { useCart } from "@/components/providers/cart-provider";
 
 import type { Product } from "@/types";
 import { allProducts } from "@/data";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
-export default function SearchPage() {
+function SearchPageContent() {
   const searchParams = useSearchParams();
   const queryParam = searchParams.get("q") || "";
 
@@ -445,5 +451,19 @@ export default function SearchPage() {
         </div>
       </main>
     </div>
+  );
+}
+
+export default function SearchPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="h-screen flex items-center justify-center">
+          Loading search results...
+        </div>
+      }
+    >
+      <SearchPageContent />
+    </Suspense>
   );
 }

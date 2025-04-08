@@ -2,8 +2,9 @@
 
 import { useEffect } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
-export function NavigationEvents() {
+function NavigationEventsContent() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
@@ -20,4 +21,12 @@ export function NavigationEvents() {
   }, [pathname, searchParams]);
 
   return null;
+}
+
+export function NavigationEvents() {
+  return (
+    <Suspense fallback={null}>
+      <NavigationEventsContent />
+    </Suspense>
+  );
 }
